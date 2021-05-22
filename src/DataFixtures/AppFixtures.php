@@ -27,7 +27,8 @@ class AppFixtures extends Fixture
                  ->setEmail("user$i@gmail.com")
                  ->setPassword($this->userPasswordEncoder->encodePassword($user,"zied"))
                  ->setIntroduction("Jawek behi $i")
-                 ->setSlug("hama-$i");
+                 ->setSlug("hama-$i")
+                 ->setIsVerified(true);
             $manager->persist($user);
         }
         // $product = new Product();

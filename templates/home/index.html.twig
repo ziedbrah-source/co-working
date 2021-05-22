@@ -3,5 +3,16 @@
 {% block title %}Home Page{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="flash-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
 <h1>Hello Zied</h1>
+
 {% endblock %}
