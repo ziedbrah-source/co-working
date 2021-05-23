@@ -68,10 +68,14 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
-
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
         }
+        #if ($user->isVerified==false) {
+           # return new RedirectResponse($this->urlGenerator->generate('home'))
+            #return new RedirectToRoute('/login', ['error_not_verified' => true]);
+        #}
+
 
         return $user;
     }
@@ -96,7 +100,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         return new RedirectResponse($this->urlGenerator->generate('home'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        #throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl()
