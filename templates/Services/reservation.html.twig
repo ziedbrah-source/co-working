@@ -1,0 +1,30 @@
+{% extends 'layout.html.twig' %}
+   {% block title %}
+       Reservation
+   {% endblock %}
+    {%  block body %}
+        <div class="container">
+        <div class="row" >
+            {% for salle in salles %}
+
+                <div class="card col-5 m-3" style="...">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ salle.nom }} </h4>
+
+                        <p class="card-text">Nombre de tableaux : {{ salle.getNbrTables() }} </p>
+                        <p class="card-text">Prix : {{ salle.getPrix() }} TND / Heure</p>
+                        <a href="{{ path('salle.detail',{'salle' : salle.id}) }}" class="card-link">Details</a>
+
+                    </div>
+                </div>
+            {% endfor %}
+
+                <label for="start">Start date:</label>
+
+                <input type="date" id="start" name="trip-start"
+                       value="2018-07-22"
+                       min="2018-01-01" max="2018-12-31">
+
+        </div>
+        </div>
+    {% endblock %}
