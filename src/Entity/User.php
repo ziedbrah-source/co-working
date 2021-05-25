@@ -7,11 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Cocur\Slugify\Slugify;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ *  @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -48,10 +51,6 @@ class User implements UserInterface
      */
     private $lastName;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $picture;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -67,6 +66,24 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     public $isVerified = false;
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
 
     public function getId(): ?int
     {
@@ -173,17 +190,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(?string $picture): self
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
 
     public function getIntroduction(): ?string
     {
@@ -219,6 +225,33 @@ class User implements UserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
     /**
      * Permet d'initialiser le slug

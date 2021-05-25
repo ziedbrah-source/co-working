@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 class RegistrationFormType extends AbstractType
 {
     /**
@@ -38,7 +39,6 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class, $this->getConfiguration("Prénom", "Votre prénom"))
             ->add('lastName', TextType::class, $this->getConfiguration("Nom","Votre nom de famille"))
             ->add('email',EmailType::class, $this->getConfiguration("Email","Votre adresse email"))
-            ->add('picture', UrlType::class, $this->getConfiguration("Photo de profil","Url de votre avatar..(va t'etre un UPLOAD)"))
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -55,6 +55,16 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => '...',
+                'download_label' => '...',
+                'download_uri' => true,
+                'image_uri' => true,
+                //'imagine_pattern' => 'product_photo_320x240',
+                'asset_helper' => true,
             ])
             ->add('introduction', TextType::class,$this->getConfiguration("Introduction", "Présentez vous en quelques mots ..."));
 
