@@ -19,7 +19,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
-
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
@@ -68,13 +68,17 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        //dump($user);
+        //die();
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
         }
-        #if ($user->isVerified==false) {
+        if ($user->isVerified==false) {
+
+            //throw new UsernameNotFoundException('You need to confirm your Email First');
+            //die();
            # return new RedirectResponse($this->urlGenerator->generate('home'))
-            #return new RedirectToRoute('/login', ['error_not_verified' => true]);
-        #}
+        }
 
 
         return $user;
@@ -82,7 +86,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password'])&&$user->isVerified;
     }
 
     /**
@@ -95,6 +99,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
