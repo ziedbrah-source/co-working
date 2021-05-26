@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Cocur\Slugify\Slugify;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -41,6 +42,8 @@ class User implements UserInterface
      */
     private $password;
 
+
+    public $passwordConfirm;
     /**
      * @ORM\Column(type="string", length=255)
      */

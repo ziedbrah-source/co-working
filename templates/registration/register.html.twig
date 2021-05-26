@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Register{% endblock %}
 
@@ -16,6 +16,7 @@
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
+    {{ form_row(registrationForm.passwordConfirm) }}
     {{ form_row(registrationForm.imageFile) }}
         {{ form_row(registrationForm.introduction) }}
 

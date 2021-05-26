@@ -56,6 +56,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('passwordConfirm', PasswordType::class, $this->getConfiguration("Confirmation de mot de passe","Veuillez confirmer votre mot de passe"))
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,

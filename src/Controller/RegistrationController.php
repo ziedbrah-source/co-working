@@ -35,6 +35,15 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            /*dump($form->get('plainPassword'));
+            dump($form->get('passwordConfirm'));
+            die();*/
+            if($form->get('plainPassword')->getviewData()!=$form->get('passwordConfirm')->getviewData()){
+                $this->addFlash("verify_email_error","The two passwords does not match");
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -53,6 +62,7 @@ class RegistrationController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
+
             );
             // do anything else you need here, like send an email
 
