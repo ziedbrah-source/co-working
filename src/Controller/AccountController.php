@@ -16,13 +16,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
 {
-    #[Route('/account', name: 'account')]
-    public function index(): Response
-    {
-        return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
-        ]);
-    }
 
     /**
      * @Route("/account/profile", name="account_profile")
@@ -75,4 +68,15 @@ class AccountController extends AbstractController
         ]);
     }
 
-}
+    /**
+     * Permet d'afficher le profil de l'utilisateur connecté
+     * @Route("/account", name="account_index")
+     * @return Response
+     */
+    public function myAccount(){
+        return $this->render('user/index.html.twig',[
+            'user' => $this->getUser()
+        ]);
+    }
+
+    }
