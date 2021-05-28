@@ -14,3 +14,7 @@
     /* round the edges to a circle with border radius 1/2 container size */
     border-radius: 50%;
 }
+.avatar.avatar-mini {
+    max-width: 24px;
+    max-height: 24px;
+}
