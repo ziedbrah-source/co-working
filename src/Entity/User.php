@@ -82,7 +82,7 @@ class User implements UserInterface
     private $image;
 
     /**
-     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="client_images", fileNameProperty="image")
      * @var File
      */
     private $imageFile;
@@ -228,6 +228,9 @@ class User implements UserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+    public function getFullName(){
+        return $this->firstName." ".$this->lastName;
     }
     public function setImageFile(File $image = null)
     {
