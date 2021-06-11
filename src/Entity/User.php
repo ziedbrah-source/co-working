@@ -70,6 +70,11 @@ class User implements UserInterface
      */
     public $isVerified = false;
     /**
+     *     /**
+     * @ORM\Column(type="boolean")
+     */
+    public $isAdmin = false;
+    /**
      * @ORM\Column(type="datetime")
      * @var \DateTime
      */
@@ -226,6 +231,17 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+    public function isAdmin(): bool
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin(bool $isAdmin): self
+    {
+        $this->isAdmin = $isAdmin;
 
         return $this;
     }
