@@ -18,6 +18,7 @@ class UserController extends AbstractController
             ->findBy(['User' => $user->getId()]);
         return $this->render('/user/index.html.twig',['user'=>$user,
             'reservations' => $reservations,
-            'nombrereservations'=>count($reservations)]);
+            'nombrereservations'=>count($reservations),
+            'pagename'=>($user->getFullName() . "'s profile" )]);
     }
 }
