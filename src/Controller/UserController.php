@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Reservation;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,11 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    #[Route('/user/{slug}', name: 'user_show')]
+    #[Route('/user/{id}', name: 'user_show')]
     public function index(User $user): Response
     {
-        return $this->render('user/index.html.twig', [
-            'user'=>$user
-        ]);
+
+        $reservations = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->findBy(['userID' => $user->getId()]);
+        return $this->render('/user/index.html.twig',['user'=>$user,
+            'reservations' => $reservations]);
     }
 }
