@@ -22,7 +22,26 @@
         </div>
 <h1>{{ user.introduction }}</h1>
         <hr>
-        <h2>Les réservations de {{ user.fullName }} (we retrieve data and we show..</h2>
+        <table style="width:100%">
+            <tr>
+                <th>ID de réservations</th>
+                <th>Faite par</th>
+                <th>Date début</th>
+                <th>Date fin</th>
+                <th>Description</th>
+                <th>Motif</th>
+            </tr>
+            <tr>
+                {% for reservation in reservations %}
+                    <td>{{ reservation.id }}</td>
+                    <td><a href="/user/{{ reservation.userID }}">{{ reservation.userID }}</td>
+                    <td>{{ reservation.date_debut }}</td>
+                    <td>{{ reservation.date_fin }}</td>
+                    <td>{{ reservation.description }}</td>
+                    <td>{{ reservation.motif }}</td>
+                {% endfor %}
+            </tr>
+        </table>
 
     </div>
 </div>
