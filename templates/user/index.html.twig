@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Page de {{ user.getFullName() }}{% endblock %}
+{% block title %}{{ pagename }}{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -8,7 +8,7 @@
         <div class="col-3 text-center">
             <img class="avatar mb-3" src="{{ vich_uploader_asset(user) }}" alt="{{ user.getFullName() }}">
             <br>
-            <span class="badge badge-primary">On va mettre Ici les nombres des réservations</span>
+            <span class="badge badge-primary">{{nombrereservations}}</span>
         </div>
         <div class="col-9">
             <h1>{{ user.fullName }}</h1>
@@ -25,7 +25,6 @@
         <table style="width:100%">
             <tr>
                 <th>ID de réservations</th>
-                <th>Faite par</th>
                 <th>Date début</th>
                 <th>Date fin</th>
                 <th>Description</th>
@@ -34,7 +33,6 @@
             <tr>
                 {% for reservation in reservations %}
                     <td>{{ reservation.id }}</td>
-                    <td><a href="/user/{{ reservation.userID }}">{{ reservation.userID }}</td>
                     <td>{{ reservation.date_debut }}</td>
                     <td>{{ reservation.date_fin }}</td>
                     <td>{{ reservation.description }}</td>
