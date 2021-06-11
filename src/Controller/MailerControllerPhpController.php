@@ -8,7 +8,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 
-class MailerController extends AbstractController
+class MailerControllerPhpController extends AbstractController
 {
     public function sendEmail(MailerInterface $mailer , $email): Response
     {

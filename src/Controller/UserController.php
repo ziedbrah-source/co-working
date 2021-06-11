@@ -16,7 +16,7 @@ class UserController extends AbstractController
 
         $reservations = $this->getDoctrine()
             ->getRepository(Reservation::class)
-            ->findBy(['userID' => $user->getId()]);
+            ->findBy(['User' => $user->getId()]);
         return $this->render('/user/index.html.twig',['user'=>$user,
             'reservations' => $reservations]);
     }
