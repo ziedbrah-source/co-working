@@ -1,0 +1,38 @@
+
+{% extends 'layout.html.twig' %}
+{% block title %}User {{ id }} Found{% endblock %}
+
+
+{% block body %}
+<table style="width:100%">
+    <tr>
+        <th>ID</th>
+        <th>Nom complet</th>
+        <th>E-mail</th>
+        <th>Verification</th>
+    </tr>
+    <tr>
+        <td>{{ id }}</td>
+        <td>{{ fullname }}</td>
+        <td>{{ email }}</td>
+        {% if (is_verified) %}
+            <td>
+                Vérifié
+            </td>
+        {% else %}
+            <td>
+                Non vérifié
+            </td>
+        {% endif %}
+        <td>
+            <label>Choisir une salle:</label>
+            <select Size={{ numbersalles }}>
+                {% for salle in salles %}
+                    <option>{{ salle.id }}</option>
+                {% endfor %}
+            </select>
+            <button>Définir comme gérant</button>
+        </td>
+    </tr>
+</table>
+{% endblock %}

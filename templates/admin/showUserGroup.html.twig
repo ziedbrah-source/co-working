@@ -1,0 +1,30 @@
+
+{% extends 'layout.html.twig' %}
+{% block title %}Listes de tout les comptes{% endblock %}
+
+
+{% block body %}
+    <table style="width:100%">
+        <tr>
+            <th>ID</th>
+            <th>Nom complet</th>
+            <th>E-mail</th>
+        </tr>
+        <tr>
+            {% for user in users %}
+                <td>{{ user.id }}</td>
+                <td>{{ user.firstname }} {{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <label>Choisir une salle:</label>
+                    <select Size={{ numbersalles }}>
+                        {% for salle in salles %}
+                            <option>{{ salle.id }}</option>
+                        {% endfor %}
+                    </select>
+                    <button>Définir comme gérant</button>
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
+{% endblock %}
