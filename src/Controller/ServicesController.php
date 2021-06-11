@@ -15,23 +15,21 @@ use App\Form\ReservationType;
 class ServicesController extends AbstractController
 {
     /**
-     * @Route("/Services",name="Services")
+     * @Route("/Reservation/{page<\d+>?1}",name="Reservation",requirements={"page"="\d+"})
      */
-    public function first(){
-        return $this->render('Services/index.html.twig',[
-            'controller_name' => 'SecondController'
-        ]);
-    }
-    /**
-     * @Route("/Reservation",name="Reservation")
-     */
-    public function reservation(){
+    public function reservation($page){
         $repository = $this->getDoctrine()->getRepository('App:Salle');
-        $salles= $repository->findBy([],['prix'=>'asc']);
+        $limit=10;
+        $start=$page * $limit - $limit;
+        $total = count($repository->findAll());
+        $pages= ceil($total / $limit); // 4.3 ->5
+
+
 
         return $this->render('Services/reservation.html.twig',[
-            'controller_name' => 'ReservationController',
-            'salles'=>$salles
+            'salles'=>$repository->findBy([],['prix'=>'asc'], $limit,$start),
+            'pages' => $pages,
+            'page' => $page
         ]);
     }
 
