@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PasswordUpdate;
+use App\Entity\Reservation;
 use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
@@ -84,8 +85,13 @@ class AccountController extends AbstractController
      * @return Response
      */
     public function myAccount(){
+        $reservations = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->findBy(['User' => $this->getUser()->getId()]);
         return $this->render('user/index.html.twig',[
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'reservations' => $reservations,
+            'nombrereservations'=>count($reservations)
         ]);
     }
 

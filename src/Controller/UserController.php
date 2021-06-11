@@ -13,11 +13,11 @@ class UserController extends AbstractController
     #[Route('/user/{id}', name: 'user_show')]
     public function index(User $user): Response
     {
-
         $reservations = $this->getDoctrine()
             ->getRepository(Reservation::class)
             ->findBy(['User' => $user->getId()]);
         return $this->render('/user/index.html.twig',['user'=>$user,
-            'reservations' => $reservations]);
+            'reservations' => $reservations,
+            'nombrereservations'=>count($reservations)]);
     }
 }
