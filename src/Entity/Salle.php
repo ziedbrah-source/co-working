@@ -170,7 +170,9 @@ class Salle
 
         return $this;
     }
-
+    public function __toString(){
+        return($this->nom);
+    }
     public function removeReservation(Reservation $reservation): self
     {
         if ($this->reservations->removeElement($reservation)) {
