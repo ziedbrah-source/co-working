@@ -91,7 +91,8 @@ class AccountController extends AbstractController
         return $this->render('user/index.html.twig',[
             'user' => $this->getUser(),
             'reservations' => $reservations,
-            'nombrereservations'=>count($reservations)
+            'nombrereservations'=>count($reservations),
+            'pagename' => "My account"
         ]);
     }
 
