@@ -2,10 +2,11 @@
 
 {% block body %}
 
-    <img href="{{ asset('images/Photo .jpg') }}" />
+
 <div class="container">
         <div class="card" style="width: 70rem;">
             <div class="card-body">
+                <img class="card-img-top m-3" src="/uploads/images/salles/1T4A0584-1024x683.jpg" style="width:1050px;height:400px;" alt="Card image cap">
                 <h5 class="card-title">Details Salle </h5>
                 <h6 class="card-subtitle mb-2 text-muted">{{ salle.nom }}</h6>
                 <p class="card-text">Nombre de tables : {{ salle.getNbrTables() }} </p>
@@ -13,7 +14,7 @@
                 <p class="card-text">Climatisation : {% if salle.getClimatisation() %} Disponible {% else %} Non disponible {% endif %}</p>
                 <p class="card-text">Nombre de tableaux : {{ salle.getNbrTableaux() }} </p>
 
-                <a class="btn btn-outline-info" role="button" style="float:right " href="{{ path('salle.reservation',{'salle' : salle.id}) }}" class="card-link">Reservation</a>
+                <a class="btn btn-outline-info" role="button" style="float: left; clear: both" href="{{ path('salle.reservation',{'salle' : salle.id}) }}" class="card-link">Reservation</a>
 
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\PasswordUpdate;
+use App\Entity\Reservation;
 use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
@@ -11,6 +12,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -59,8 +62,16 @@ class AccountController extends AbstractController
                 $user->setPassword($password);
                 $manager->persist($user);
                 $manager->flush();
+
                 $this->addFlash("success","Votre mot de passe a bien été modifié!");
-                return $this->redirectToRoute("home");
+                $response = $this->forward('App\Controller\MailerControllerPhpController::sendEmail', [
+                    'email' => $user->getEmail(),
+                ]);
+
+                // ... further modify the response or return it directly
+
+                return $response;
+
             }
         }
         return $this->render('account/password.html.twig', [
@@ -74,8 +85,14 @@ class AccountController extends AbstractController
      * @return Response
      */
     public function myAccount(){
+        $reservations = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->findBy(['User' => $this->getUser()->getId()]);
         return $this->render('user/index.html.twig',[
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'reservations' => $reservations,
+            'nombrereservations'=>count($reservations),
+            'pagename' => "My account"
         ]);
     }
 
