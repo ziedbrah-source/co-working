@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Salle;
 
+use App\Service\Pagination;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,19 +18,19 @@ class ServicesController extends AbstractController
     /**
      * @Route("/Reservation/{page<\d+>?1}",name="Reservation",requirements={"page"="\d+"})
      */
-    public function reservation($page){
-        $repository = $this->getDoctrine()->getRepository('App:Salle');
-        $limit=10;
-        $start=$page * $limit - $limit;
-        $total = count($repository->findAll());
-        $pages= ceil($total / $limit); // 4.3 ->5
+    public function reservation($page, Pagination $pagination){
+        $pagination->setEntityClass(Salle::class)
+                    ->setPage($page) ;//par default 10 le limit
+        $salles= $pagination->getData();
+
+
 
 
 
         return $this->render('Services/reservation.html.twig',[
-            'salles'=>$repository->findBy([],['prix'=>'asc'], $limit,$start),
-            'pages' => $pages,
-            'page' => $page
+            'salles'=>$pagination->getData(),
+            'pagination' => $pagination,
+
         ]);
     }
 
