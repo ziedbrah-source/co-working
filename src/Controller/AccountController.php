@@ -7,6 +7,7 @@ use App\Entity\Reservation;
 use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -84,16 +85,22 @@ class AccountController extends AbstractController
      * @Route("/account", name="account_index")
      * @return Response
      */
-    public function myAccount(){
-        $reservations = $this->getDoctrine()
-            ->getRepository(Reservation::class)
-            ->findBy(['User' => $this->getUser()->getId()]);
-        return $this->render('user/index.html.twig',[
-            'user' => $this->getUser(),
-            'reservations' => $reservations,
-            'nombrereservations'=>count($reservations),
-            'pagename' => "My account"
-        ]);
+    public function redirectToDefault(){
+        return $this->redirectToRoute('account_index_default',['page' => 1]);
     }
 
+    /**
+     * Permet d'afficher le profil de l'utilisateur connecté
+     * @Route("/account/p={page}", name="account_index_default")
+     * @return Response
+     */
+    public function myAccount($page='',Pagination $pagination){
+        //Getting all reservations.
+        $pagination->setEntityClass(Reservation::class)->setPage($page);
+        $reservations = $pagination->getData();
+        return $this->render('admin/showAllReservations.html.twig',
+            ['reservations' => $reservations,
+                'pagination'=>$pagination,
+                'user' =>$this->getUser()]);
+        }
     }
