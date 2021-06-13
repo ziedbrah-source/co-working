@@ -64,6 +64,7 @@ class Salle
         $this->reservations = new ArrayCollection();
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -183,5 +184,25 @@ class Salle
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getNotAvailableDays(){
+        $getNotAvailableDays =[];
+        foreach($this->reservations as $reservation){
+            $resultat=range(
+                $reservation->getDateDebut()->getTimestamp(),
+                $reservation->getDateFin()->getTimestamp(),
+                24*60*60
+            );
+            $days= array_map(function($dayTimestamp){
+                return new \DateTime(date('Y-m-d',$dayTimestamp));
+            },$resultat);
+            $getNotAvailableDays=array_merge($getNotAvailableDays,$days);
+        }
+        return $getNotAvailableDays;
     }
 }
