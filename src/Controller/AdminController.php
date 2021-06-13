@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Salle;
 use App\Entity\User;
+use App\Service\Pagination;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,16 +14,24 @@ class AdminController extends AbstractController
 {
     /**
      *
-     * @Route("/admin/ReservationsList", name="admin_reservations_show")
+     * @Route("/admin/Reservations", name="admin_reservations_default")
      *
      */
-    function getReservations(){
+    function RedirectToDefaultIndice(){
+        return $this->redirectToRoute("admin_reservations_show", ['page' => 1]);
+    }
+    /**
+     *
+     * @Route("/admin/Reservations/p={page}", name="admin_reservations_show")
+     *
+     */
+    function getReservations($page,Pagination $pagination){
         //Getting all reservations.
-        $reservations = $this->getDoctrine()
-            ->getRepository(Reservation::class)
-            ->findAll();
+        $pagination->setEntityClass(Reservation::class)->setPage($page);
+        $reservations = $pagination->getData();
         return $this->render('admin/showAllReservations.html.twig',
-            ['reservations' => $reservations]);
+            ['reservations' => $reservations,
+                'pagination'=>$pagination]);
     }
     /**
      *
