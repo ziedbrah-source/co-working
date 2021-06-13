@@ -21,6 +21,8 @@ security:
             guard:
                 authenticators:
                     - App\Security\FormLoginAuthenticator
+            pattern: ^/
+            user_checker: App\Security\UserChecker
             logout:
                 path: app_logout
                 # where to redirect after logout

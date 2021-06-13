@@ -74,18 +74,10 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator implements P
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
         }
-        /*if ($user->isVerified==false) {
-
-            throw new Symfony\Component\Security\Core\Exception\AccessDeniedException;
-            //throw new UsernameNotFoundException('You need to confirm your Email First');
-            //die();
-           # return new RedirectResponse($this->urlGenerator->generate('home'))
-        }*/
 
 
         return $user;
     }
-
     public function checkCredentials($credentials, UserInterface $user)
     {
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
