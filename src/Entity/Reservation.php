@@ -3,13 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Reservation
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -49,6 +52,32 @@ class Reservation
      */
     private $User;
 
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $prix;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist(){
+if(empty($this->createdAt)){
+    $this->createdAt=new \DateTime();
+}
+if(empty($this->prix)){
+   $this->prix= $this->salle->getPrix() * $this->getDuration();
+}
+    }
+    public function getDuration(){
+        $diff =$this->date_fin->diff($this->date_debut);
+        return $diff->days;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,6 +85,7 @@ class Reservation
 
     public function getDateDebut(): ?\DateTimeInterface
     {
+       // $this->date_debut->getTimeStamp();
         return $this->date_debut;
     }
 
@@ -124,5 +154,59 @@ class Reservation
         $this->User = $User;
 
         return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+    public function isBookableDays(){
+        $notAvailableDays=$this->salle->getNotAvailableDays();
+        $bookingDays = $this->getDays();
+
+        $days= array_map(function($day){
+            return $day->format('Y-m-d');
+        },$bookingDays);
+        $notAvailable =array_map(function($day){
+            return $day->format('Y-m-d');
+        },$notAvailableDays);
+        foreach ($days as $day){
+            if(array_search($day,$notAvailable) !== false)return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDays(){
+        $resultat=range(
+            $this->date_debut->getTimestamp(),
+            $this->date_fin->getTimestamp(),
+            24*60*60
+        );
+        $days =array_map(function($dayTimestamp){
+            return new \DateTime(date('Y-m-d',$dayTimestamp));
+        },$resultat);
+        return $days;
     }
 }

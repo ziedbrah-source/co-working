@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+   {% block title %}
+       Details Reservation
+   {% endblock %}
+    {%  block body %}
+        <h1>Details Reservation</h1>
+
+        <ol class="list-group">
+
+            <li class="list-group-item">
+                {{ reservation.getID() }}
+            </li>
+            <li class="list-group-item">
+                {{ reservation.getPrix() }}
+            </li>
+            <li class="list-group-item">
+            de {{ reservation.getDateDebut() | date('d/m/Y') }} à {{ reservation.getDateFin() | date('d/m/Y') }}
+            </li>
+            <li class="list-group-item">
+
+            </li>
+        </ol>
+    {% endblock %}

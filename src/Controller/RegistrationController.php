@@ -66,14 +66,14 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            $this->addFlash("notice","You need to Confirm");
+            $this->addFlash("notice","Please Check the Verification Link in your email");
             return $this->redirectToRoute("home");
-            #return $guardHandler->authenticateUserAndHandleSuccess(
-                #$user,
-                #$request,
-                #$authenticator,
-                #'main' // firewall name in security.yaml
-            #);
+            /*return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );*/
         }
 
         return $this->render('registration/register.html.twig', [

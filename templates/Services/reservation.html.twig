@@ -7,7 +7,7 @@
         <div class="row" >
             {% for salle in salles %}
                 <div class="card mb-2 m-3">
-                    <img class="card-img-top m-3" src="/uploads/images/salles/1T4A0584-1024x683.jpg" style="width:500px;height:200px;" alt="Card image cap">
+                    <img class="card-img-top m-3" src="/uploads/images/salles/{{ salle.image }}" style="width:500px;height:200px;" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{  salle.nom }}</h5>
                         <p class="card-text">Nombre de tables : {{ salle.getNbrTables() }}</p>
@@ -15,19 +15,9 @@
                         <a href="{{ path('salle.detail',{'salle' : salle.id}) }}" style="float: right" class="btn btn-outline-info">Details</a>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
             {% endfor %}
 
-
-
         </div>
+            {{ pagination.display() }}
         </div>
     {% endblock %}
