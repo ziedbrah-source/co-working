@@ -83,25 +83,28 @@ if(empty($this->prix)){
         return $this->id;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getdate_debut(): ?string
     {
        // $this->date_debut->getTimeStamp();
-        return $this->date_debut;
+        $newDate = $this->date_debut;
+        $newDate = $newDate->format('d/m/Y @ G:i');
+        return $newDate;
     }
 
-    public function setDateDebut(\DateTimeInterface $date_debut): self
+    public function setdate_debut(\DateTimeInterface $date_debut): self
     {
-        $this->date_debut = $date_debut;
-
+        $this->date_debut = date_debut;
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getdate_fin(): ?string
     {
-        return $this->date_fin;
+        $newDate = $this->date_fin;
+        $newDate = $newDate->format('d/m/Y @ G:i');
+        return $newDate;
     }
 
-    public function setDateFin(\DateTimeInterface $date_fin): self
+    public function setdate_fin(\DateTimeInterface $date_fin): self
     {
         $this->date_fin = $date_fin;
 
@@ -147,6 +150,9 @@ if(empty($this->prix)){
     public function getUser(): ?User
     {
         return $this->User;
+    }
+    public function getUserId() : ?int {
+        return $this->getUser()->getId();
     }
 
     public function setUser(?User $User): self
