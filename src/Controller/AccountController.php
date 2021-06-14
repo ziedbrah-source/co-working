@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\PasswordUpdate;
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\AccountType;
+use App\Service\Pagination;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -79,28 +81,37 @@ class AccountController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
-
     /**
-     * Permet d'afficher le profil de l'utilisateur connecté
-     * @Route("/account", name="account_index")
+     * Permet d'annuler une réservation
+     * @Route("/account/cancel{id<\d+>?1}",name="account_cancel_reservation")
      * @return Response
      */
-    public function redirectToDefault(){
-        return $this->redirectToRoute('account_index_default',['page' => 1]);
+    public function cancelReservation($id){
+        $reservation = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($reservation);
+        $manager->flush();
+        return $this->redirectToRoute('account_index');
     }
-
     /**
      * Permet d'afficher le profil de l'utilisateur connecté
-     * @Route("/account/p={page}", name="account_index_default")
+     * @Route("/account/{page<\d+>?1}", name="account_index")
      * @return Response
      */
-    public function myAccount($page='',Pagination $pagination){
+
+    public function myAccount($page = 1,Pagination $pagination){
         //Getting all reservations.
+        $user = $this->getUser();
         $pagination->setEntityClass(Reservation::class)->setPage($page);
-        $reservations = $pagination->getData();
-        return $this->render('admin/showAllReservations.html.twig',
+
+        $reservations = $pagination->getData(['User' => $user->getId()]);
+        return $this->render('user/index.html.twig',
             ['reservations' => $reservations,
                 'pagination'=>$pagination,
-                'user' =>$this->getUser()]);
+                'user' =>$user,
+                'pagename'=>"My Account",
+                'nombrereservations' => count($reservations)]);
         }
     }

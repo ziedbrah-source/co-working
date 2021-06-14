@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
  * @ORM\HasLifecycleCallbacks()
@@ -22,11 +22,13 @@ class Reservation
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("today", message="la date d'arrivée doit être ultérieure a la date d'aujourd'hui")
      */
     private $date_debut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="date_debut", message="la date de depart doit etre plus eloigné que la date d'arrivé")
      */
     private $date_fin;
 
@@ -83,28 +85,47 @@ if(empty($this->prix)){
         return $this->id;
     }
 
-    public function getdate_debut(): ?string
+    public function getdate_debut()
     {
        // $this->date_debut->getTimeStamp();
         $newDate = $this->date_debut;
         $newDate = $newDate->format('d/m/Y @ G:i');
         return $newDate;
-    }
+    }public function getDateDebut(): ?\DateTimeInterface
+{
+       // $this->date_debut->getTimeStamp();
+        $newDate = $this->date_debut;
 
+        return $newDate;
+    }
+    public function setDateDebut(\DateTimeInterface $date_debut): self
+    {
+        $this->date_debut = $date_debut;
+        return $this;
+    }
     public function setdate_debut(\DateTimeInterface $date_debut): self
     {
         $this->date_debut = date_debut;
         return $this;
     }
 
-    public function getdate_fin(): ?string
+    public function getdate_fin()
     {
         $newDate = $this->date_fin;
         $newDate = $newDate->format('d/m/Y @ G:i');
         return $newDate;
+    }    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->date_fin;
     }
 
     public function setdate_fin(\DateTimeInterface $date_fin): self
+    {
+        $this->date_fin = $date_fin;
+
+        return $this;
+    }
+    public function setDateFin(\DateTimeInterface $date_fin): self
     {
         $this->date_fin = $date_fin;
 
@@ -200,7 +221,6 @@ if(empty($this->prix)){
         }
         return true;
     }
-
     /**
      * @return array
      */

@@ -59,7 +59,17 @@
     {% block body %}
         <h1>Body</h1>
     {% endblock %}
+
+    <script src="{{ asset('assets/js/runtime.js') }}"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+    </script>
+{% endblock %}
 {% include '/partials/footer.html.twig' %}
+
 {% block javascripts %}
 <script src="{{ asset('assets/js/runtime.js') }}"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
@@ -68,6 +78,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="assets/js/Simple-Slider.js"></script>
  {% endblock %}
+
 
 
 </body>
