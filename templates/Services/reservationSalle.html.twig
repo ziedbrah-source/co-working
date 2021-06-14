@@ -28,7 +28,10 @@
             <div class="row-15">
                 {{ form_row(form.description) }}
             </div>
+        <h4>Montant de la Réservation : <span id="amount">...</span> &euro;</h4>
+        <span id="days">0</span> jour(s) à {{ salle.prix }} / jour
         <div class="row-15">
+
             {{ form_row(form.confirmer, { 'label': 'confirmer' }) }}
             {{ form_end(form) }}
         </div>
@@ -52,8 +55,29 @@
                 startDate: new Date(),
 
             }
-        )
+        );
+        $('#reservation_date_debut,#reservation_date_fin').on('change',calculateAmount);
 
     });
+    function calculateAmount() {
+        // On chope les dates
+        const endDate = new Date($('#reservation_date_fin').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
+        const startDate = new Date($('#reservation_date_debut').val().replace(/(\d+)\/(\d+)\/(\d{4})/, '$3-$2-$1'));
+        // 18/09/2018
+        // ->REGEX POWER.
+        // 2018-09-18
+        if(startDate && endDate && startDate < endDate){
+            console.log($('#reservation_date_debut').val());
+            const DAY_TIME=24*60*60*1000;
+            const Interval = endDate.getTime() - startDate.getTime();
+            const days= Interval /DAY_TIME;
+            const amount = days * {{ salle.prix }};
+            $('#days').text(days);
+            $('#amount').text(amount);
+
+        }
+
+
+    }
 </script>
 {% endblock %}
