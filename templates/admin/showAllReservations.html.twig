@@ -13,15 +13,19 @@
             <th>Description</th>
             <th>Motif</th>
         </tr>
-        <tr>
             {% for reservation in reservations %}
+        <tr>
                 <td>{{ reservation.id }}</td>
                 <td><a href="{{ path('user_show',{id: reservation.userID}) }}">{{ reservation.userID }}</td>
                 <td>{{ reservation.date_debut }}</td>
                 <td>{{ reservation.date_fin }}</td>
                 <td>{{ reservation.description }}</td>
                 <td>{{ reservation.motif }}</td>
-            {% endfor %}
+                <td>{{ form_start(forms[reservation.id]) }}<button type="edit" class="btn">Edit</button>
+                    <button type="delete"  class="btn">Delete</button>
+                    {{ form_end(forms[reservation.id]) }}
+                </td>
         </tr>
+            {% endfor %}
     </table>
 {% endblock %}
