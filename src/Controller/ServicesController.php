@@ -14,8 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ReservationType;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 class ServicesController extends AbstractController
 {
+    private $knpSnappy;
+    public function __construct(\Knp\Snappy\Pdf $knpSnappy) { $this->knpSnappy = $knpSnappy; }
     /**
      * @Route("/Reservation/{page<\d+>?1}",name="Reservation",requirements={"page"="\d+"})
      */
@@ -48,7 +51,21 @@ class ServicesController extends AbstractController
             "reservation"=> $reservation,
         ]);
     }
+    /**
+     * @Route ("/reservation/{reservation}/generatePdf",name="reservation_pdf")
+     */
+    public function ReservationPdf(Reservation  $reservation = null){
 
+            $html = $this->renderView('Services/pdf.html.twig', array(
+                "reservation"=> $reservation,
+            ));
+
+        return new PdfResponse(
+            $this->knpSnappy->getOutputFromHtml($html),
+            'file.pdf'
+        );
+
+    }
     /**
      * @Route ("/reservation/{id}", name="reservation_show")
      * @param Reservation $reservation
