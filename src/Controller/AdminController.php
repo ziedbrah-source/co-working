@@ -122,6 +122,8 @@ class AdminController extends AbstractController
      */
     function setPrixSalle( $id){
         $salle= $this->getDoctrine()->getRepository(Salle::class)->find($id);
+        $manager = $this->getDoctrine()->getManager();
+
 
     }
     /**
