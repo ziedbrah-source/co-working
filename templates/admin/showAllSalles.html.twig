@@ -25,16 +25,6 @@
                 <td>{{ salle.nbrtableaux }}</td>
                 <td>{{ salle.prix }}dt</td>
                 <td>
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Modifier
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ path("admin_salles_equipements",{'id':salle.id}) }}">Modifier Equipement</a>
-                            <a class="dropdown-item" href="{{ path("admin_salles_photo",{'id':salle.id}) }}">Changer de Photo</a>
-                            <a class="dropdown-item" href="{{ path("admin_salles_prix",{'id':salle.id}) }}">Modifier Prix</a>
-                        </div>
-                    </div>
                     <a href = "{{ path('admin_salles_delete', {'id' : salle.id }) }}" class= "btn btn-primary">Supprimer</a>
                 </td>
             </tr>
