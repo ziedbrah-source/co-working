@@ -5,11 +5,21 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href={{ asset('assets/css/style.css') }}>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css">
 
     {% block stylesheets %}
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css">
+        <link rel="stylesheet" href={{ asset('assets/css/style.css') }}>
+        <link rel="stylesheet" href={{ asset('assets/bootstrap/css/bootstrap.min.css') }}>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allura">
+        <link rel="stylesheet" href={{ asset('assets/fonts/font-awesome.min.css') }}>
+        <link rel="stylesheet" href={{ asset('assets/fonts/ionicons.min.css') }}>
+        <link rel="stylesheet" href={{ asset('assets/css/Article-List.css') }}>
+        <link rel="stylesheet" href={{ asset('assets/css/Brands.css') }}>
+        <link rel="stylesheet" href={{ asset('assets/css/Footer-Basic.css') }}>
+        <link rel="stylesheet" href={{ asset('assets/css/Footer-Clean.css') }}>
+        <link rel="stylesheet" href={{ asset('assets/css/Testimonials.css') }}>
     {% endblock %}
     <title>
         {% block title %}
@@ -18,6 +28,7 @@
     </title>
 </head>
 <body>
+
 {% include 'partials/header.html.twig' %}
     {% for  message in  app.session.flashBag.get('info') %}
         <div class="alert alert-info">
@@ -34,19 +45,26 @@
             {{ message }}
         </div>
     {% endfor %}
+
     {% block body %}
         <h1>Body</h1>
     {% endblock %}
-
     <script src="{{ asset('assets/js/runtime.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-{% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
 
     </script>
-{% endblock %}
 {% include '/partials/footer.html.twig' %}
+
+{% block javascripts %}
+
+<script src="{{ asset('assets/js/runtime.js') }}"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/agency.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
+ {% endblock %}
 
 
 

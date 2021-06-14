@@ -1,0 +1,24 @@
+
+{% extends 'layout.html.twig' %}
+{% block title %}Listes de tout les comptes{% endblock %}
+
+
+{% block body %}
+<table style="width:100%">
+    <tr>
+        <th>ID de l'utilisateur</th>
+        <th>E-mail</th>
+        <th>Fullname</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td><a href="{{ path('user_show',{id: user.id}) }}">{{ user.id }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.firstname }} {{ user.lastname }}</td>
+        <td>
+            <a href = "{{ path('admin_user_ban', {'id' : user.id }) }}" class= "btn btn-primary">Bannir</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

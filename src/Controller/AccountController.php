@@ -81,7 +81,20 @@ class AccountController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
-
+    /**
+     * Permet d'annuler une réservation
+     * @Route("/account/cancel{id<\d+>?1}",name="account_cancel_reservation")
+     * @return Response
+     */
+    public function cancelReservation($id){
+        $reservation = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($reservation);
+        $manager->flush();
+        return $this->redirectToRoute('account_index');
+    }
     /**
      * Permet d'afficher le profil de l'utilisateur connecté
      * @Route("/account/{page<\d+>?1}", name="account_index")

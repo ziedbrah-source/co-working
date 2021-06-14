@@ -23,10 +23,6 @@ class ServicesController extends AbstractController
         $pagination->setEntityClass(Salle::class)
                     ->setPage($page) ;//par default 10 le limit
 
-
-
-
-
         return $this->render('Services/reservation.html.twig',[
             'salles'=>$pagination->getData([]),
             'pagination' => $pagination,
