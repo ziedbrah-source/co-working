@@ -221,7 +221,6 @@ if(empty($this->prix)){
         }
         return true;
     }
-
     /**
      * @return array
      */

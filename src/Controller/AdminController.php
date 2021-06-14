@@ -56,26 +56,90 @@ class AdminController extends AbstractController
     }
     /**
      *
-     * @Route("/admin/Reservations/delete", name="admin_reservations_delete")
+     * @Route("/admin/Reservations/delete{id<\d+>?1}", name="admin_reservations_delete")
      *
      */
-    public function ReservationDelete(){
-        return $this->redirectToRoute('admin');
+    public function ReservationDelete($id){
+        $reservation = $this->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($reservation);
+        $manager->flush();
+        return $this->redirectToRoute('admin_reservations');
     }
     /**
      *
-     * @Route("/admin/SalleList", name="admin_salles_show")
+     * @Route("/admin/Salles/{page<\d+>?1}", name="admin_salles")
      *
      */
-    function getSalles(){
-        //Getting all reservations.
-        $salles = $this->getDoctrine()
-            ->getRepository(Salle::class)
-            ->findAll();
-        return $this->render('admin/showAllSalles.html.twig',
-            ['salles' => $salles]);
-    }
+    function getSalles(Pagination $pagination, $page){
+        $pagination->setEntityClass(Salle::class)->setPage($page);
+        $salles = $pagination->getData([]);
 
+        return $this->render('admin/showAllSalles.html.twig',
+            ['salles' => $salles,
+                'pagination'=>$pagination]);
+    }
+    /**
+     *
+     * @Route("/admin/Salles/equips{id<\d+>?1}", name="admin_salles_equipements")
+     *
+     */
+    function setEquipsSalle( $id){}
+    /**
+     *
+     * @Route("/admin/Salles/photo{id<\d+>?1}", name="admin_salles_photo")
+     *
+     */
+    function setPhotoSalle( $id){}
+    /**
+     *
+     * @Route("/admin/Salles/prix{id<\d+>?1}", name="admin_salles_prix")
+     *
+     */
+    function setPrixSalle( $id){}
+    /**
+     *
+     * @Route("/admin/Salles/delete{id<\d+>?1}", name="admin_salles_delete")
+     *
+     */
+    function delSalle( $id){
+        $salle = $this->getDoctrine()
+            ->getRepository(Salle::class)
+            ->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($salle);
+        $manager->flush();
+        return $this->redirectToRoute('admin_salles');
+    }
+    /**
+     *
+     * @Route("/admin/Users/{page<\d+>?1}", name="admin_users")
+     *
+     */
+    function getUsers(Pagination $pagination, $page){
+        $pagination->setEntityClass(User::class)->setPage($page);
+        $users = $pagination->getData([]);
+
+        return $this->render('admin/showAllUsers.html.twig',
+            ['users' => $users,
+                'pagination'=>$pagination]);
+    }
+    /**
+     *
+     * @Route("/admin/Users/ban{id<\d+>?1}", name="admin_user_ban")
+     *
+     */
+    function banUser($id){
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($user);
+        $manager->flush();
+        return $this->redirectToRoute('admin_users');
+    }
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
