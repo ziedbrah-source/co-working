@@ -42,7 +42,8 @@
                         <td>{{ reservation.description }}</td>
                         <td>{{ reservation.motif }}</td>
                         <td><a href="{{path('reservation_show', {'id': reservation.id}) }}" class="btn btn-primary">Pour plus de details</a></td>
-                        <td><a href="{{ path('account_cancel_reservation',{ 'id': reservation.id}) }}">Annuler</a></td>
+                    <td><a href="{{ path('account_reservations_edit',{ 'id': reservation.id}) }}">Modifier</a></td>
+                    <td><a href="{{ path('account_cancel_reservation',{ 'id': reservation.id}) }}">Annuler</a></td>
 
                 </tr>
                 {% endfor %}

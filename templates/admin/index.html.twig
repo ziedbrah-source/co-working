@@ -3,12 +3,10 @@
 {% block title %}Choix d'opérations{% endblock %}
 
 {% block body %}
-    <div class="jumbotron">
         <h1 class="display-3">Admin operations</h1>
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="{{ path('admin_salles') }}" role="button">Gérer les salles</a>
             <a class="btn btn-primary btn-lg" href="{{ path('admin_reservations') }}" role="button">Gérer les réservations</a>
             <a class="btn btn-primary btn-lg" href="{{ path('admin_users') }}" role="button">Gérer les utilisateurs</a>
         </p>
-    </div>
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\PasswordUpdate;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\AccountType;
+use App\Form\ReservationType;
 use App\Service\Pagination;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
@@ -24,6 +25,7 @@ class AccountController extends AbstractController
 {
 
     /**
+     * Profile d'un utlisateur
      * @Route("/account/profile", name="account_profile")
      *
      * @return Response
@@ -94,6 +96,30 @@ class AccountController extends AbstractController
         $manager->remove($reservation);
         $manager->flush();
         return $this->redirectToRoute('account_index');
+    }
+    /**
+     *
+     * @Route("/account/Reservations/edit/{id<\d+>?1}", name="account_reservations_edit")
+     *
+     */
+    public function ReservationEdit($id, Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $reservation = $entityManager->getRepository(Reservation::class)->find($id);
+        if (!$reservation) {
+            throw $this->createNotFoundException(
+                "Pas de réservation d'ID = ".$id
+            );
+        }
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            return $this->redirectToRoute('admin');
+        }
+        return $this->render('admin/reservationModifier.html.twig', [
+            'form' => $form->createView(),
+            'reservation'=> $reservation,
+        ]);
     }
     /**
      * Permet d'afficher le profil de l'utilisateur connecté
