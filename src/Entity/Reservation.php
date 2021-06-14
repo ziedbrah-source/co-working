@@ -89,8 +89,18 @@ if(empty($this->prix)){
         $newDate = $this->date_debut;
         $newDate = $newDate->format('d/m/Y @ G:i');
         return $newDate;
-    }
+    }public function getDateDebut(): ?\DateTimeInterface
+{
+       // $this->date_debut->getTimeStamp();
+        $newDate = $this->date_debut;
 
+        return $newDate;
+    }
+    public function setDateDebut(\DateTimeInterface $date_debut): self
+    {
+        $this->date_debut = $date_debut;
+        return $this;
+    }
     public function setdate_debut(\DateTimeInterface $date_debut): self
     {
         $this->date_debut = date_debut;
@@ -102,9 +112,18 @@ if(empty($this->prix)){
         $newDate = $this->date_fin;
         $newDate = $newDate->format('d/m/Y @ G:i');
         return $newDate;
+    }    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->date_fin;
     }
 
     public function setdate_fin(\DateTimeInterface $date_fin): self
+    {
+        $this->date_fin = $date_fin;
+
+        return $this;
+    }
+    public function setDateFin(\DateTimeInterface $date_fin): self
     {
         $this->date_fin = $date_fin;
 

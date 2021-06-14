@@ -87,6 +87,7 @@ class AccountController extends AbstractController
      * @Route("/account/{page<\d+>?1}", name="account_index")
      * @return Response
      */
+
     public function myAccount($page = 1,Pagination $pagination){
         //Getting all reservations.
         $user = $this->getUser();
