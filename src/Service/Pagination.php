@@ -179,7 +179,7 @@ class Pagination {
      *
      * @return array
      */
-    public function getData() {
+    public function getData($critere) {
         if(empty($this->entityClass)) {
             throw new \Exception("Vous n'avez pas spécifié l'entité sur laquelle nous devons paginer. Utilisez la méthode setEntityClass() de votre objet Pagination.");
         }
@@ -190,7 +190,7 @@ class Pagination {
         // et dans la limite d'éléments imposées (voir propriété $limit)
         return $this->manager
             ->getRepository($this->entityClass)
-            ->findBy([], [], $this->limit, $offset);
+            ->findBy($critere, [], $this->limit, $offset);
     }
 
     /**

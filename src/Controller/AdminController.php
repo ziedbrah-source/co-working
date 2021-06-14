@@ -35,11 +35,15 @@ class AdminController extends AbstractController
         $forms = array();
         foreach($reservations as $reservation) {
             $form = $this->createForm(AdminReservationsOperationsType::class, $reservation);
-            if ($form->get('edit')->isClicked()) {
-                $this->redirectToRoute('admin_reservations_edit');
-            }
-            if ($form->get('delete')->isClicked()) {
-                $this->redirectToRoute('admin_reservations_delete');
+            if($form->isSubmitted()&&$form->isValid()){
+                echo("isSubmitted");
+                if ($form->get('edit')->isClicked()) {
+                    $this->redirectToRoute('admin_reservations_edit');
+                    echo("edit");
+                }
+                if ($form->get('delete')->isClicked()) {
+                    $this->redirectToRoute('admin_reservations_delete');
+                }
             }
             $forms[$reservation->getId()] = $form->createView();
         }
@@ -54,7 +58,7 @@ class AdminController extends AbstractController
      *
      */
     public function ReservationEdit(){
-        echo ("Hello");
+        return $this->redirectToRoute('admin');
     }
     /**
      *

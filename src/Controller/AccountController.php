@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PasswordUpdate;
 use App\Entity\Reservation;
 use App\Form\AccountType;
+use App\Service\Pagination;
 use App\Form\PasswordUpdateType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -94,13 +95,15 @@ class AccountController extends AbstractController
      * @Route("/account/p={page}", name="account_index_default")
      * @return Response
      */
-    public function myAccount($page='',Pagination $pagination){
+    public function myAccount($page='1',Pagination $pagination){
         //Getting all reservations.
         $pagination->setEntityClass(Reservation::class)->setPage($page);
-        $reservations = $pagination->getData();
-        return $this->render('admin/showAllReservations.html.twig',
+        $reservations = $pagination->getData(['User' => $this->getUserId()]);
+        return $this->render('user/index.html.twig',
             ['reservations' => $reservations,
                 'pagination'=>$pagination,
-                'user' =>$this->getUser()]);
+                'user' =>$this->getUser(),
+                'pagename'=>"My Account",
+                'nombrereservations' => count($reservations)]);
         }
     }
