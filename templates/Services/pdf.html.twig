@@ -1,0 +1,33 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+{% block title %}Réservation n°{{ reservation.id }}{% endblock %}
+
+{% block body %}
+
+    {% set salle = reservation.salle %}
+
+    <div class="container">
+    <h1 class="my-5">Votre reservation (n {{reservation.id}})</h1>
+
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-light">
+                <h2>Details:</h2>
+                <dl class="row">
+                    <dt class="col-md-4">Numéro</dt>
+                    <dd class="col-md-8">{{reservation.id}}</dd>
+                    <dt class="col-md-4">Date d'arrivee</dt>
+                    <dd class="col-md-8">{{reservation.DateDebut | date('d/m/Y')}}</dd>
+                    <dt class="col-md-4">Date de depart</dt>
+                    <dd class="col-md-8">{{reservation.DateFin | date('d/m/Y')}}</dd>
+                    <dt class="col-md-4">Nombre de jours</dt>
+                    <dd class="col-md-8">{{reservation.duration}}</dd>
+                    <dt class="col-md-4">Montant total</dt>
+                    <dd class="col-md-8">{{reservation.prix | number_format(2, ',', ' ')}} &euro;</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
