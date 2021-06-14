@@ -14,7 +14,7 @@ class UserController extends AbstractController
     #[Route('/user/{id}/', name: 'user_show')]
     public function index(User $user): Response
     {
-        if ($this->getUser() == $user){return $this->redirectToRoute('account_index_default',['page' => 1]);}
+        if ($this->getUser() == $user){return $this->redirectToRoute('account_index',['page' => 1]);}
         else {
             $reservations = $this->getDoctrine()
                 ->getRepository(Reservation::class)
