@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PasswordUpdate;
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\AccountType;
 use App\Service\Pagination;
 use App\Form\PasswordUpdateType;
@@ -87,7 +88,7 @@ class AccountController extends AbstractController
      * @return Response
      */
     public function redirectToDefault(){
-        return $this->redirectToRoute('account_index_default',['page' => 1]);
+        return $this->redirectToRoute('account_index_default');
     }
 
     /**
@@ -95,14 +96,15 @@ class AccountController extends AbstractController
      * @Route("/account/p={page}", name="account_index_default")
      * @return Response
      */
-    public function myAccount($page='1',Pagination $pagination){
+    public function myAccount($page = 1,Pagination $pagination){
         //Getting all reservations.
+        $user = $this->getUser();
         $pagination->setEntityClass(Reservation::class)->setPage($page);
-        $reservations = $pagination->getData(['User' => $this->getUserId()]);
+        $reservations = $pagination->getData(['User' => $user->getId()]);
         return $this->render('user/index.html.twig',
             ['reservations' => $reservations,
                 'pagination'=>$pagination,
-                'user' =>$this->getUser(),
+                'user' =>$user,
                 'pagename'=>"My Account",
                 'nombrereservations' => count($reservations)]);
         }
