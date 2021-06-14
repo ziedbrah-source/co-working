@@ -58,10 +58,16 @@ class Salle
     private $image;
 
     /**
-     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="salles_images", fileNameProperty="image")
      * @var File
      */
     private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="salle")
