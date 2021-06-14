@@ -9,10 +9,10 @@ use App\Form\AdminReservationsOperationsType;
 use App\Form\ReservationType;
 use App\Form\SalleCreationType;
 use App\Service\Pagination;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends AbstractController
 {
@@ -87,19 +87,23 @@ class AdminController extends AbstractController
      * @Route("/admin/Salles/create", name="admin_salles_create")
      *
      */
-    public function createSalle(){
+    public function createSalle(Request $request){
         $salle = new Salle();
         $form = $this->createForm(SalleCreationType::class, $salle);
-
-
+        $entityManager = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $entityManager->persist($salle);
+            $entityManager->flush();
+            $this->addFlash('success', 'Salle Creé!');
             return $this->redirectToRoute("admin_salles");
         }
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($salle);
-        $entityManager->flush();
-        $this->addFlash("notice","Il y'a une erreur dans la saisie des données de la salle.");
-        return $this->redirectToRoute("admin_salles_create");
+
+        return $this->render('admin/newSalle.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
     /**
      *
