@@ -7,7 +7,6 @@ use App\Entity\Reservation;
 use App\Form\AccountType;
 use App\Service\Pagination;
 use App\Form\PasswordUpdateType;
-use App\Service\Pagination;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
