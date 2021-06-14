@@ -36,7 +36,7 @@ class ReservationType extends AbstractType
                     'size'=>'3',
                     'class'=>'col-5'
                 ]])
-            
+
             ->add('date_fin',DateType::class,[
                 "widget"=>"single_text",
             'attr' => [
@@ -58,10 +58,8 @@ class ReservationType extends AbstractType
                 ->add('confirmer', SubmitType::class, [
                    'attr' => ['label' => 'Confirmer']
                 ]);
-
         $builder->get('date_debut')->addModelTransformer($this->transformer);
         $builder->get('date_fin')->addModelTransformer($this->transformer);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
