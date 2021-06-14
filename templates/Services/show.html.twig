@@ -38,6 +38,8 @@
                         <dd class="col-md-8">{{reservation.prix | number_format(2, ',', ' ')}} &euro;</dd>
                     </dl>
             </div>
+                <a href="{{ path("reservation_pdf",{reservation: reservation.id}) }}" class="btn btn-primary">Télécharger Cette Fiche</a>
+
         </div>
     </div>
 

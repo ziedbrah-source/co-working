@@ -24,15 +24,6 @@
                 <td>{{ reservation.description }}</td>
                 <td>{{ reservation.motif }}</td>
                 <td>
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Modifier
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ path("admin_reservations_horraire",{'id':salle.id}) }}">Modifier Horraire</a>
-                            <a class="dropdown-item" href="{{ path("admin_reservations_salle",{'id':salle.id}) }}">Changer de Salle</a>
-                        </div>
-                    </div>
                     <a href = "{{ path('admin_reservations_delete', {'id' : reservation.id }) }}" class= "btn btn-primary">Supprimer</a>
                 </td>
         </tr>

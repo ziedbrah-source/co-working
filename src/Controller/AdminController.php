@@ -7,11 +7,12 @@ use App\Entity\Salle;
 use App\Entity\User;
 use App\Form\AdminReservationsOperationsType;
 use App\Form\ReservationType;
+use App\Form\SalleCreationType;
 use App\Service\Pagination;
-use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends AbstractController
 {
@@ -83,22 +84,50 @@ class AdminController extends AbstractController
     }
     /**
      *
-     * @Route("/admin/Salles/equips{id<\d+>?1}", name="admin_salles_equipements")
+     * @Route("/admin/Salles/create", name="admin_salles_create")
      *
      */
-    function setEquipsSalle( $id){}
+    public function createSalle(Request $request){
+        $salle = new Salle();
+        $form = $this->createForm(SalleCreationType::class, $salle);
+        $entityManager = $this->getDoctrine()->getManager();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $entityManager->persist($salle);
+            $entityManager->flush();
+            $this->addFlash('success', 'Salle Creé!');
+            return $this->redirectToRoute("admin_salles");
+        }
+
+        return $this->render('admin/newSalle.html.twig', [
+            'form' => $form->createView(),
+            'pagename' => "Créer une nouvelle salle"
+        ]);
+    }
     /**
      *
-     * @Route("/admin/Salles/photo{id<\d+>?1}", name="admin_salles_photo")
+     * @Route("/admin/Salles/edit{id<\d+>?1}", name="admin_salles_edit")
      *
      */
-    function setPhotoSalle( $id){}
-    /**
-     *
-     * @Route("/admin/Salles/prix{id<\d+>?1}", name="admin_salles_prix")
-     *
-     */
-    function setPrixSalle( $id){}
+    function setDetailsSalle( $id, Request $request){
+        $salle = $this->getDoctrine()->getRepository(Salle::class)->find($id);
+        $form = $this->createForm(SalleCreationType::class, $salle);
+        $form->handleRequest($request);
+        $entityManager = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($salle);
+            $entityManager->flush();
+            $this->addFlash('success', 'Salle Modifié!');
+            return $this->redirectToRoute("admin_salles");
+        }
+
+        return $this->render('admin/NewSalle.html.twig', [
+            'form' => $form->createView(),
+            'pagename' => "Modifier la salle : ". $salle->getNom()
+        ]);
+    }
     /**
      *
      * @Route("/admin/Salles/delete{id<\d+>?1}", name="admin_salles_delete")
@@ -140,9 +169,9 @@ class AdminController extends AbstractController
         $manager->flush();
         return $this->redirectToRoute('admin_users');
     }
+
     #[Route('/admin', name: 'admin')]
-    public function index(): Response
-    {
+    function index(): Response {
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
 
