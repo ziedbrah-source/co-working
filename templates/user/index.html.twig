@@ -32,6 +32,7 @@
                     <th>Date fin</th>
                     <th>Description</th>
                     <th>Motif</th>
+                    <th>Voir Details</th>
                 </tr>
                 <tr>
                     {% for reservation in reservations %}
@@ -40,6 +41,8 @@
                         <td>{{ reservation.date_fin }}</td>
                         <td>{{ reservation.description }}</td>
                         <td>{{ reservation.motif }}</td>
+                        <td><a href="{{path('reservation_show', {'id': reservation.id}) }}" class="btn btn-primary">Pour plus de details</a></td>
+                        <td><a href="{{ path('account_cancel_reservation',{ 'id': reservation.id}) }}">Annuler</a></td>
                     {% endfor %}
                 </tr>
             </table>

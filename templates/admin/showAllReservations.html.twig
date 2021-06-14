@@ -10,18 +10,32 @@
             <th>Faite par</th>
             <th>Date début</th>
             <th>Date fin</th>
+            <th>Salle</th>
             <th>Description</th>
             <th>Motif</th>
         </tr>
-        <tr>
             {% for reservation in reservations %}
+        <tr>
                 <td>{{ reservation.id }}</td>
                 <td><a href="{{ path('user_show',{id: reservation.userID}) }}">{{ reservation.userID }}</td>
                 <td>{{ reservation.date_debut }}</td>
                 <td>{{ reservation.date_fin }}</td>
+                <td><a href = "{{ path('salle.detail',{salle : reservation.salle })}}">{{ reservation.salle }}</td>
                 <td>{{ reservation.description }}</td>
                 <td>{{ reservation.motif }}</td>
-            {% endfor %}
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Modifier
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ path("admin_reservations_horraire",{'id':salle.id}) }}">Modifier Horraire</a>
+                            <a class="dropdown-item" href="{{ path("admin_reservations_salle",{'id':salle.id}) }}">Changer de Salle</a>
+                        </div>
+                    </div>
+                    <a href = "{{ path('admin_reservations_delete', {'id' : reservation.id }) }}" class= "btn btn-primary">Supprimer</a>
+                </td>
         </tr>
+            {% endfor %}
     </table>
 {% endblock %}

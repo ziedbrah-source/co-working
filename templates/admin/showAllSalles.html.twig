@@ -1,0 +1,42 @@
+
+{% extends 'layout.html.twig' %}
+{% block title %}Listes de tout les comptes{% endblock %}
+
+
+{% block body %}
+    <table style="width:100%">
+        <tr>
+            <th>ID de la salle</th>
+            <th>Nom de la salle</th>
+            <th>Nombre de tables</th>
+            <th>Projecteur</th>
+            <th>Climatisation</th>
+            <th>Nombre de tableaux</th>
+            <th>Prix</th>
+        </tr>
+        {% for salle in salles %}
+            <tr>
+                <td>{{ salle.id }}</td>
+                <td>{{ salle.nom }}</td>
+                <td>{{ salle.nbrtables }}</td>
+                <td>{{ salle.datashow }}</td>
+                <td>{{ salle.climatisation }}</td>
+                <td>{{ salle.nbrtableaux }}</td>
+                <td>{{ salle.prix }}dt</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Modifier
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ path("admin_salles_equipements",{'id':salle.id}) }}">Modifier Equipement</a>
+                            <a class="dropdown-item" href="{{ path("admin_salles_photo",{'id':salle.id}) }}">Changer de Photo</a>
+                            <a class="dropdown-item" href="{{ path("admin_salles_prix",{'id':salle.id}) }}">Modifier Prix</a>
+                        </div>
+                    </div>
+                    <a href = "{{ path('admin_salles_delete', {'id' : salle.id }) }}" class= "btn btn-primary">Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
