@@ -38,6 +38,7 @@ class AccountController extends AbstractController
             $manager->persist($user);
             $manager->flush();
             $this->addFlash("success","Les données du Profil ont été enregistrer");
+            return $this->redirectToRoute("account_index",['page' => 1]);
         }
 
         return $this->render('account/profile.html.twig', [
