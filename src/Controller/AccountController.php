@@ -89,7 +89,7 @@ class AccountController extends AbstractController
     public function myAccount($page,Pagination $pagination){
         //Getting all reservations.
         $pagination->setEntityClass(Reservation::class)->setPage($page);
-        $reservations = $pagination->getData(['User' => $this->getUserId()]);
+        $reservations = $pagination->getData(['User' => $this->getUser()->getId()]);
         return $this->render('user/index.html.twig',
             ['reservations' => $reservations,
                 'pagination'=>$pagination,
