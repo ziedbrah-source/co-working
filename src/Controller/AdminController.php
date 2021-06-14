@@ -31,32 +31,7 @@ class AdminController extends AbstractController
                 'pagination'=>$pagination]);
     }
     /**
-     *
-     * @Route("/admin/Reservations/edit/{id<\d+>?1}", name="admin_reservations_edit")
-     *
-     */
-    public function ReservationEdit($id){//, Request $request){
-        $entityManager = $this->getDoctrine()->getManager();
-        $reservation = $entityManager->getRepository(Reservation::class)->find($id);
-
-        if (!$reservation) {
-            throw $this->createNotFoundException(
-                "Pas de réservation d'ID = ".$id
-            );
-        }
-        $form = $this->createForm(ReservationType::class, $reservation);
-        //$form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-            return $this->redirectToRoute('admin');
-        }
-        return $this->render('admin/reservationModifier.html.twig', [
-            'registrationForm' => $form->createView(),
-            'reservation'=> $reservation,
-        ]);
-    }
-    /**
-     *
+     *Supprimer une réservation
      * @Route("/admin/Reservations/delete{id<\d+>?1}", name="admin_reservations_delete")
      *
      */
@@ -70,7 +45,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_reservations');
     }
     /**
-     *
+     *Tout les salles.
      * @Route("/admin/Salles/{page<\d+>?1}", name="admin_salles")
      *
      */
@@ -83,7 +58,7 @@ class AdminController extends AbstractController
                 'pagination'=>$pagination]);
     }
     /**
-     *
+     *Créer une salle
      * @Route("/admin/Salles/create", name="admin_salles_create")
      *
      */
@@ -107,7 +82,7 @@ class AdminController extends AbstractController
         ]);
     }
     /**
-     *
+     *Modifier une salle.
      * @Route("/admin/Salles/edit{id<\d+>?1}", name="admin_salles_edit")
      *
      */
@@ -129,7 +104,7 @@ class AdminController extends AbstractController
         ]);
     }
     /**
-     *
+     *Supprimer une salle.
      * @Route("/admin/Salles/delete{id<\d+>?1}", name="admin_salles_delete")
      *
      */
@@ -143,7 +118,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_salles');
     }
     /**
-     *
+     *Tout les utilisateurs.
      * @Route("/admin/Users/{page<\d+>?1}", name="admin_users")
      *
      */
@@ -156,7 +131,7 @@ class AdminController extends AbstractController
                 'pagination'=>$pagination]);
     }
     /**
-     *
+     *Bannir un utilisateur.
      * @Route("/admin/Users/ban{id<\d+>?1}", name="admin_user_ban")
      *
      */

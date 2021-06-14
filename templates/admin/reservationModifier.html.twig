@@ -1,26 +1,26 @@
 {% extends 'layout.html.twig' %}
 {% block title %}
-    Reservation salle
+    Modifier une réservation de salle.
 {% endblock %}
 {% block body %}
-    <a src="/uploads/images/clients/60ac4d55b6d1c664589847.jpg"></a>
+
     <div class="container" style="margin-top: 15px" >
-        <h3>Reservation {{ salle }} </h3>
+        <h3>Reservation {{ reservation.id }} </h3>
         <div class="container">
             {{ form_start(form) }}
             <div class="row">
                 <div class="col">
-                    {{ form_row(form.date_debut, {value: twig_var ~ reservation.date_debut } ) }}
+                    {{ form_row(form.date_debut) }}
                 </div>
                 <div class="col">
-                    {{ form_row(form.date_fin, {value: twig_var ~ reservation.date_fin } ) }}
+                    {{ form_row(form.date_fin) }}
                 </div>
             </div>
             <div class="row-9">
-                {{ form_row(form.motif, {value: twig_var ~ reservation.motif } ) }}
+                {{ form_row(form.motif) }}
             </div>
             <div class="row-15">
-                {{ form_row(form.description, {value: twig_var ~ reservation.description } ) }}
+                {{ form_row(form.description ) }}
             </div>
             <div class="row-15">
                 {{ form_row(form.confirmer, { 'label': 'confirmer' }) }}
