@@ -50,7 +50,6 @@ class ServicesController extends AbstractController
     public function ReservationReussit(Reservation  $reservation = null){
         return $this->render('Services/show.html.twig',[
             "reservation"=> $reservation,
-            "withAlert"=> true,
         ]);
     }
 
@@ -84,7 +83,10 @@ class ServicesController extends AbstractController
 
                 $manager->persist($reservation);
                 $manager->flush();
-                return ($this->render('Services/reservation_success.html.twig', ['reservation' => $reservation]));
+                return $this->redirectToRoute('reservation_success',[
+                    "reservation"=> $reservation->getId(),
+                    "withAlert"=> true,
+                ]);
             }
 
         }
