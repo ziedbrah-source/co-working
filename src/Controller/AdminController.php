@@ -17,15 +17,7 @@ class AdminController extends AbstractController
 {
     /**
      *
-     * @Route("/admin/Reservations", name="admin_reservations_default")
-     *
-     */
-    function RedirectToDefaultIndice(){
-        return $this->redirectToRoute("admin_reservations_show", ['page' => 1]);
-    }
-    /**
-     *
-     * @Route("/admin/Reservations/p={page}", name="admin_reservations_show")
+     * @Route("/admin/Reservations/{page<\d+>?1}", name="admin_reservations_default")
      *
      */
     function getReservations($page,Pagination $pagination){
