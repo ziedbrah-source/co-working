@@ -69,7 +69,7 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            $this->addFlash("notice","Please Check the Verification Link in your email");
+            $this->addFlash("success","Vérifez votre compte en utilisant le mail que vous avez reçu dans votre email");
             return $this->redirectToRoute("home");
             /*return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
