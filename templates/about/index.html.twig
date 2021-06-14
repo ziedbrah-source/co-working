@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}About Us{% endblock %}
+{% block body %}
+<section class="article-list" style="height: 1851px;">
+    <div class="container" style="background: #f5ffff;height: 622px;margin-top: -52px;margin-right: -37px;margin-left: 45px;">
+        <div class="intro">
+            <h2 class="text-center" style="color: var(--bs-green);font-family: 'Kaushan Script', serif;">Découvrez notre endroit</h2>
+            <p class="text-center">. </p>
+        </div>
+        <div class="row articles">
+            <div class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src="assets/img/desk.jpg"></a>
+                <h3 class="name">Indoor Spaces</h3>
+                <p class="description">Une ambiance calme et un bon cadre de travail</p><a class="action" href="#"><i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+            <div class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src="assets/img/building.jpg"></a>
+                <h3 class="name">Outdoor spaces</h3>
+                <p class="description">Un espace approprié pour travailler en extérieur. </p><a class="action" href="#"><i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+            <div class="col-sm-6 col-md-4 item"><a href="#"><img class="img-fluid" src="assets/img/loft.jpg"></a>
+                <h3 class="name">Salles de conférences</h3>
+                <p class="description"> Des salles prévues pour des évennements (conférence d'affaire,reunion..)</p><a class="action" href="#"><i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <section class="testimonials-clean" style="font-size: 15px;transform-origin: top;border-width: 23px;width: 1166px;height: 700px;background: rgb(245,255,255);margin-left: 42px;margin-bottom: 0;margin-right: -57px;">
+        <h2 class="text-center" style="margin: -53px;font-family: 'Kaushan Script', serif;color: var(--bs-green);margin-right: 4x9px;">Témoignages de nos chers clients :<br><br><br></h2>
+        <div class="container">
+            <div class="intro"></div>
+            <div class="row people" style="height: 550px;">
+                <div class="col-md-6 col-lg-4 item">
+                    <div class="box">
+                        <p class="description">Très bonne ambiance! j'y retournerai certainement,<br> super équipe aussi!</p>
+                    </div>
+                    <div class="author"><img class="rounded-circle" src="assets/img/1.jpg">
+                        <h5 class="name">Amine</h5>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <div class="box">
+                        <p class="description">Cet endroit est formidable pour travailler et faire la connaissance d'autres personnes !</p>
+                    </div>
+                    <div class="author"><img class="rounded-circle" src="assets/img/3.jpg">
+                        <h5 class="name">Mohamed</h5>
+
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 item">
+                    <div class="box">
+                        <p class="description">J'ai la chance d'avoir rencontré des gens aussi extraordinaires avec des idées aussi innovantes ! Bonne continuation 😉</p>
+                    </div>
+                    <div class="author"><img class="rounded-circle" src="assets/img/2.jpg">
+                        <h5 class="name">Nour</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

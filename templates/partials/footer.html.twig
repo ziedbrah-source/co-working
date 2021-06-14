@@ -1,19 +1,36 @@
 
 {% block body %}
-<footer style="background: #f5ffff;">
-    <div class="container">
-        <footer class="footer-basic" style="background: #f5ffff;">
-            <div class="social"><a href="#" style="color: var(--bs-red);border-top-color: var(--bs-pink);border-right-color: var(--bs-pink);border-bottom-color: var(--bs-pink);border-left-color: var(--bs-pink);"><i class="icon ion-social-instagram"></i></a><a href="#" style="border-top-color: var(--bs-blue);border-right-color: var(--bs-blue);border-bottom-color: var(--bs-blue);border-left-color: var(--bs-blue);"><i class="icon ion-social-twitter" style="color: var(--bs-blue);"></i></a><a href="#" style="border-top-color: rgb(20,25,150);border-right-color: rgb(10,18,88);border-bottom-color: rgb(10,29,123);border-left-color: rgb(13,26,98);"><i class="icon ion-social-facebook" style="color: rgb(0,15,152);"></i></a></div>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#" style="color: rgb(0,0,0);">Accueil</a></li>
-                <li class="list-inline-item"><a href="#" style="color: rgb(0,0,0);">Services</a></li>
-                <li class="list-inline-item"><a href="#" style="color: rgb(0,0,0);">A propos</a></li>
-                <li class="list-inline-item"><a href="#" style="color: rgb(0,0,0);">Adresse</a></li>
-                <li class="list-inline-item"></li>
-                <li class="list-inline-item"></li>
-            </ul>
-            <p class="copyright">Company Name © 2021</p>
-        </footer>
-    </div>
-</footer>
+    <footer class="footer-clean" style="background: #f5ffff;margin-left: 41px;margin-top: -1px;margin-bottom: 2px;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-4 col-md-3 item" style="border-radius: 0px;margin-bottom: -6px;margin-top: 137px;">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href={{ path('Reservation') }}">Reservation</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item" style="border-color: var(--bs-red);margin-top: 137px;">
+                    <h3>A propos</h3>
+                    <ul>
+                        <li></li>
+                        <li><a href="{{ path('about') }}">Avis</a></li>
+                        <li><a href="{{ path('about') }}">Espace</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 col-md-3 item" style="margin-top: 137px;">
+                    <h3>Adresse</h3>
+                    <ul>
+                        <li><a href="{{ path('map') }}">Localisation</a></li>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 item social" style="margin-top: 137px;">
+                    <h3>Besoin de plus d'informations?</h3><a href="#" style="margin-left: 12px;margin-right: 40px;">
+                        <i class="icon ion-social-facebook"></i></a>
+                    <a href="#" style="margin-right: 35px;"><i class="icon ion-social-twitter"></i></a><a href="#" style="margin-right: 28px;"><i class="icon ion-social-instagram"></i></a>
+                    <p class="copyright">&nbsp; &nbsp; &nbsp; <br><br>&nbsp; Company Name © 2021&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %}
