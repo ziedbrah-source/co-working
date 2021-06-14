@@ -1,16 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="{{ path('home') }}">SymBnB</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('home') }}">Accueil</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
+{% block body %}
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark" id="mainNav" style="background: radial-gradient(rgb(255,255,255) 100%, white 100%, rgb(246,246,246) 100%), linear-gradient(black, white 0%), rgb(255,255,255);color: rgb(255,255,255);border-color: rgb(0,0,0);border-left-color: rgb(255,255,255);">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('home') }}"  style="color: var(--bs-green);">Coworking Space</a>
+        <button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto text-uppercase">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('home') }}" style="color: rgb(0,92,15);">ACCUEIL</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('Reservation') }}" style="color: rgb(0,92,15);">SERVICES</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('Reservation') }}" style="color: rgb(0,92,15);">A PROPOS</a>
+                </li>
+
             {% if app.user %}
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdownLink">
@@ -27,13 +34,12 @@
                     </div>
                 </li>
             {% else %}
-                <li class="nav-item">
-                    <a href="{{ path('app_register') }}" class="nav-link">Inscription</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ path('app_login') }}" class="nav-link">Connexion</a>
-                </li>
+
+                <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}" style="color: var(--bs-green);">CONNEXION</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}" style="color: var(--bs-green);">INSCRIPTION</a></li>
             {% endif %}
-        </ul>
+             </ul>
+    </div>
     </div>
 </nav>
+{% endblock %}
