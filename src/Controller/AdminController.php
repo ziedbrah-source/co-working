@@ -7,6 +7,7 @@ use App\Entity\Salle;
 use App\Entity\User;
 use App\Form\AdminReservationsOperationsType;
 use App\Form\ReservationType;
+use App\Form\SalleCreationType;
 use App\Service\Pagination;
 use http\Env\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,10 +84,31 @@ class AdminController extends AbstractController
     }
     /**
      *
+     * @Route("/admin/Salles/create", name="admin_salles_create")
+     *
+     */
+    public function createSalle(){
+        $salle = new Salle();
+        $form = $this->createForm(SalleCreationType::class, $salle);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute("admin_salles");
+        }
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($salle);
+        $entityManager->flush();
+        $this->addFlash("notice","Il y'a une erreur dans la saisie des données de la salle.");
+        return $this->redirectToRoute("admin_salles_create");
+    }
+    /**
+     *
      * @Route("/admin/Salles/equips{id<\d+>?1}", name="admin_salles_equipements")
      *
      */
-    function setEquipsSalle( $id){}
+    function setEquipsSalle( $id){
+
+    }
     /**
      *
      * @Route("/admin/Salles/photo{id<\d+>?1}", name="admin_salles_photo")
@@ -98,7 +120,10 @@ class AdminController extends AbstractController
      * @Route("/admin/Salles/prix{id<\d+>?1}", name="admin_salles_prix")
      *
      */
-    function setPrixSalle( $id){}
+    function setPrixSalle( $id){
+        $salle= $this->getDoctrine()->getRepository(Salle::class)->find($id);
+
+    }
     /**
      *
      * @Route("/admin/Salles/delete{id<\d+>?1}", name="admin_salles_delete")
