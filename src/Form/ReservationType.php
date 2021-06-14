@@ -32,8 +32,8 @@ class ReservationType extends AbstractType
                 ]])
 
             ->add('date_fin',DateType::class,[
-                "widget"=>"single_text"
-            ,'attr' => [
+                "widget"=>"single_text",
+            'attr' => [
         'size'=>'3',
         'class'=>'col-5'
             ]])

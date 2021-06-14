@@ -83,7 +83,7 @@ if(empty($this->prix)){
         return $this->id;
     }
 
-    public function getdate_debut(): ?string
+    public function getdate_debut()
     {
        // $this->date_debut->getTimeStamp();
         $newDate = $this->date_debut;
@@ -97,7 +97,7 @@ if(empty($this->prix)){
         return $this;
     }
 
-    public function getdate_fin(): ?string
+    public function getdate_fin()
     {
         $newDate = $this->date_fin;
         $newDate = $newDate->format('d/m/Y @ G:i');

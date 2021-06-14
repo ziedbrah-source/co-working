@@ -10,6 +10,7 @@
             <th>Faite par</th>
             <th>Date début</th>
             <th>Date fin</th>
+            <th>Salle</th>
             <th>Description</th>
             <th>Motif</th>
         </tr>
@@ -19,11 +20,12 @@
                 <td><a href="{{ path('user_show',{id: reservation.userID}) }}">{{ reservation.userID }}</td>
                 <td>{{ reservation.date_debut }}</td>
                 <td>{{ reservation.date_fin }}</td>
+                <td><a href = "{{ path('salle.detail',{salle : reservation.salle })}}">{{ reservation.salle }}</td>
                 <td>{{ reservation.description }}</td>
                 <td>{{ reservation.motif }}</td>
-                <td>{{ form_start(forms[reservation.id]) }}<button type="edit" class="btn">Edit</button>
-                    <button type="delete"  class="btn">Delete</button>
-                    {{ form_end(forms[reservation.id]) }}
+                <td>
+                    <a href = "{{ path('admin_reservations_edit', {'id' : reservation.id }) }}" class= "btn btn-primary">Modifier</a>
+                    <a href = "{{ path('admin_reservations_delete', {'id' : reservation.id }) }}" class= "btn btn-primary">Supprimer</a>
                 </td>
         </tr>
             {% endfor %}

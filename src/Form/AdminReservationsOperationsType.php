@@ -16,7 +16,7 @@ class AdminReservationsOperationsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('edit',SubmitType::class,[
+            ->add('',SubmitType::class,[
                 'attr' => ['label' => 'Modifier']
                 ])
             ->add('delete',SubmitType::class,[

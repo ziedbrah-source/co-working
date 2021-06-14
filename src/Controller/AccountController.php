@@ -84,16 +84,7 @@ class AccountController extends AbstractController
 
     /**
      * Permet d'afficher le profil de l'utilisateur connecté
-     * @Route("/account", name="account_index")
-     * @return Response
-     */
-    public function redirectToDefault(){
-        return $this->redirectToRoute('account_index_default');
-    }
-
-    /**
-     * Permet d'afficher le profil de l'utilisateur connecté
-     * @Route("/account/p={page}", name="account_index_default")
+     * @Route("/account/{page<\d+>?1}", name="account_index")
      * @return Response
      */
     public function myAccount($page = 1,Pagination $pagination){

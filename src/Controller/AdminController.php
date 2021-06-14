@@ -16,48 +16,50 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     *
-     * @Route("/admin/Reservations", name="admin_reservations_default")
-     *
-     */
-    function RedirectToDefaultIndice(){
-        return $this->redirectToRoute("admin_reservations_show", ['page' => 1]);
-    }
-    /**
-     *
-     * @Route("/admin/Reservations/p={page}", name="admin_reservations_show")
-     *
+     * Permet d'afficher le profil de l'utilisateur connecté
+     * @Route("/admin/Reservations/{page<\d+>?1}", name="admin_reservations")
+     * @return Response
      */
     function getReservations($page,Pagination $pagination){
         //Getting all reservations.
         $pagination->setEntityClass(Reservation::class)->setPage($page);
         $reservations = $pagination->getData([]);
-        $forms = array();
-        foreach($reservations as $reservation) {
-            $form = $this->createForm(AdminReservationsOperationsType::class, $reservation);
-            if($form->isSubmitted()&&$form->isValid()){
-                echo("isSubmitted");
-                if ($form->get('edit')->isClicked()) {
-                    $this->redirectToRoute('admin_reservations_edit');
-                    echo("edit");
-                }
-                if ($form->get('delete')->isClicked()) {
-                    $this->redirectToRoute('admin_reservations_delete');
-                }
-            }
-            $forms[$reservation->getId()] = $form->createView();
-        }
+
         return $this->render('admin/showAllReservations.html.twig',
             ['reservations' => $reservations,
-                'pagination'=>$pagination,
-                'forms'=> $forms]);
+                'pagination'=>$pagination]);
     }
     /**
      *
-     * @Route("/admin/Reservations/edit", name="admin_reservations_edit")
+     * @Route("/admin/Reservations/edit/{id<\d+>?1}", name="admin_reservations_edit")
      *
      */
-    public function ReservationEdit(){
+    public function ReservationEdit($id){//, Request $request){
+        $entityManager = $this->getDoctrine()->getManager();
+        $reservation = $entityManager->getRepository(Reservation::class)->find($id);
+
+        if (!$reservation) {
+            throw $this->createNotFoundException(
+                "Pas de réservation d'ID = ".$id
+            );
+        }
+        $form = $this->createForm(ReservationType::class, $reservation);
+        //$form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            return $this->redirectToRoute('admin');
+        }
+        return $this->render('admin/reservationModifier.html.twig', [
+            'registrationForm' => $form->createView(),
+            'reservation'=> $reservation,
+        ]);
+    }
+    /**
+     *
+     * @Route("/admin/Reservations/delete", name="admin_reservations_delete")
+     *
+     */
+    public function ReservationDelete(){
         return $this->redirectToRoute('admin');
     }
     /**
