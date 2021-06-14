@@ -6,9 +6,12 @@ use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=SalleRepository::class)
+ * @Vich\Uploadable
  */
 class Salle
 {
@@ -45,14 +48,26 @@ class Salle
     private $nbr_tableaux;
 
     /**
+     *
      * @ORM\Column(type="float")
      */
     private $prix;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="salles_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservation::class, mappedBy="salle")
@@ -63,7 +78,22 @@ class Salle
     {
         $this->reservations = new ArrayCollection();
     }
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
 
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
 
     public function getId(): ?int
     {
