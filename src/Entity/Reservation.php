@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
  * @ORM\HasLifecycleCallbacks()
@@ -22,11 +22,13 @@ class Reservation
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan("today", message="la date d'arrivée doit être ultérieure a la date d'aujourd'hui")
      */
     private $date_debut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(propertyPath="date_debut", message="la date de depart doit etre plus eloigné que la date d'arrivé")
      */
     private $date_fin;
 
