@@ -9,6 +9,7 @@ namespace App\Form;
 
 use App\Entity\Reservation;
 
+use App\Form\DataTransformer\FrenchToDateTimeTransformer;
 use Symfony\Component\Form\AbstractType;
 use App\Form\ApplicationType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -21,19 +22,22 @@ use Symfony\Component\Mime\Part\TextPart;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 class ReservationType extends AbstractType
 {
+    private $transformer;
+    //injection dependance
+    public function __construct(FrenchToDateTimeTransformer $transformer)
+    {
+        $this->transformer=$transformer;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date_debut',DateType::class,[
-                "widget"=>"single_text"
-                ,'attr' => [
+            ->add('date_debut',TextType::class,['attr' => [
                     'size'=>'3',
                     'class'=>'col-5'
                 ]])
 
-            ->add('date_fin',DateType::class,[
-                "widget"=>"single_text"
-            ,'attr' => [
+            ->add('date_fin',TextType::class,['attr' => [
         'size'=>'3',
         'class'=>'col-5'
             ]])
@@ -52,6 +56,9 @@ class ReservationType extends AbstractType
                 ->add('confirmer', SubmitType::class, [
                    'attr' => ['label' => 'Confirmer']
                 ]);
+
+        $builder->get('date_debut')->addModelTransformer($this->transformer);
+        $builder->get('date_fin')->addModelTransformer($this->transformer);
 
     }
 

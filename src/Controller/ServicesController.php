@@ -22,14 +22,13 @@ class ServicesController extends AbstractController
     public function reservation($page, Pagination $pagination){
         $pagination->setEntityClass(Salle::class)
                     ->setPage($page) ;//par default 10 le limit
-        $salles= $pagination->getData();
 
 
 
 
 
         return $this->render('Services/reservation.html.twig',[
-            'salles'=>$pagination->getData(),
+            'salles'=>$pagination->getData([]),
             'pagination' => $pagination,
 
         ]);
@@ -49,7 +48,18 @@ class ServicesController extends AbstractController
      * @Route ("/reservationSuccess/{reservation}",name="reservation_success")
      */
     public function ReservationReussit(Reservation  $reservation = null){
-        return $this->render('Services/reservation_success.html.twig',[
+        return $this->render('Services/show.html.twig',[
+            "reservation"=> $reservation,
+            "withAlert"=> true,
+        ]);
+    }
+
+    /**
+     * @Route ("/reservation/{id}", name="reservation_show")
+     * @param Reservation $reservation
+     */
+    public function show(Reservation $reservation){
+        return $this->render('Services/show.html.twig',[
             "reservation"=> $reservation
         ]);
     }
