@@ -23,7 +23,7 @@ class AdminController extends AbstractController
     function getReservations($page,Pagination $pagination){
         //Getting all reservations.
         $pagination->setEntityClass(Reservation::class)->setPage($page);
-        $reservations = $pagination->getData();
+        $reservations = $pagination->getData([]);
         $forms = array();
         foreach($reservations as $reservation) {
             $form = $this->createForm(AdminReservationsOperationsType::class, $reservation);
